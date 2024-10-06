@@ -222,45 +222,41 @@
         #login-form input[type="email"],
         #login-form input[type="password"] {
             width: 100%;
-            padding: 12px 20px;
-            margin: 8px 0;
-            display: inline-block;
+            padding: 12px;
+            margin-bottom: 15px;
             border: 1px solid #bdc3c7;
-            border-radius: 4px;
-            box-sizing: border-box;
+            border-radius: 5px;
+            font-size: 14px;
         }
         #login-form button {
             width: 100%;
-            background-color: #27ae60;
-            color: white;
-            padding: 14px 20px;
-            margin: 8px 0;
+            padding: 12px;
+            background-color: #2980b9;
+            color: #ffffff;
             border: none;
-            border-radius: 4px;
+            border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
+            transition: background-color 0.3s;
         }
         #login-form button:hover {
-            background-color: #1e8449;
+            background-color: #1c5980;
         }
-        .error-message {
-            color: #e74c3c;
-            margin-bottom: 10px;
+        #login-form .error {
+            color: #c0392b;
+            margin-bottom: 15px;
             text-align: center;
         }
     </style>
 </head>
 <body>
-
     <!-- Login Page -->
     <div id="login-page">
         <form id="login-form">
             <h2>Login</h2>
-            <div class="error-message" id="login-error"></div>
-            <label for="email">Email:</label>
-            <input type="email" id="email" placeholder="Enter your email" required>
-            <label for="password">Password:</label>
-            <input type="password" id="password" placeholder="Enter your password" required>
+            <div class="error" id="login-error"></div>
+            <input type="email" id="login-email" placeholder="Email" required>
+            <input type="password" id="login-password" placeholder="Password" required>
             <button type="submit">Login</button>
         </form>
     </div>
@@ -271,20 +267,20 @@
             <h1>Society Management</h1>
             <nav>
                 <ul>
-                    <li><a href="#dashboard" onclick="navigate('dashboard')">Dashboard</a></li>
-                    <li><a href="#members" onclick="navigate('members')">Members</a></li>
-                    <li><a href="#announcements" onclick="navigate('announcements')">Announcements</a></li>
-                    <li><a href="#maintenance" onclick="navigate('maintenance')">Maintenance</a></li>
-                    <li><a href="#events" onclick="navigate('events')">Events</a></li>
-                    <li><a href="#profile" onclick="navigate('profile')">Profile</a></li>
-                    <li><a href="#" onclick="logout()">Logout</a></li>
+                    <li><a href="#dashboard">Dashboard</a></li>
+                    <li><a href="#members">Members</a></li>
+                    <li><a href="#announcements">Announcements</a></li>
+                    <li><a href="#maintenance">Maintenance</a></li>
+                    <li><a href="#events">Events</a></li>
+                    <li><a href="#profile">Profile</a></li>
+                    <li><a href="#" id="logout-btn">Logout</a></li>
                 </ul>
             </nav>
         </header>
 
         <main>
             <!-- Dashboard Section -->
-            <section id="dashboard" class="section">
+            <section id="dashboard">
                 <h2>Dashboard</h2>
                 <div class="cards">
                     <div class="card">
@@ -307,7 +303,7 @@
             </section>
 
             <!-- Members Section -->
-            <section id="members" class="section" style="display: none;">
+            <section id="members">
                 <h2>Members</h2>
                 <button class="btn" id="add-member-btn">Add Member</button>
                 <table>
@@ -326,7 +322,7 @@
             </section>
 
             <!-- Announcements Section -->
-            <section id="announcements" class="section" style="display: none;">
+            <section id="announcements">
                 <h2>Announcements</h2>
                 <button class="btn" id="add-announcement-btn">Add Announcement</button>
                 <table>
@@ -344,7 +340,7 @@
             </section>
 
             <!-- Maintenance Section -->
-            <section id="maintenance" class="section" style="display: none;">
+            <section id="maintenance">
                 <h2>Maintenance Requests</h2>
                 <button class="btn" id="add-maintenance-btn">New Request</button>
                 <table>
@@ -363,7 +359,7 @@
             </section>
 
             <!-- Events Section -->
-            <section id="events" class="section" style="display: none;">
+            <section id="events">
                 <h2>Events</h2>
                 <button class="btn" id="add-event-btn">Add Event</button>
                 <table>
@@ -381,7 +377,7 @@
             </section>
 
             <!-- Profile Section -->
-            <section id="profile" class="section" style="display: none;">
+            <section id="profile">
                 <h2>Your Profile</h2>
                 <div class="profile-info">
                     <p><strong>Name:</strong> <span id="profile-name">John Doe</span></p>
@@ -395,7 +391,7 @@
         <!-- Modal Templates -->
         <div id="modal" class="modal">
             <div class="modal-content">
-                <span class="close-button" onclick="closeModal()">&times;</span>
+                <span class="close-button">&times;</span>
                 <div id="modal-body">
                     <!-- Dynamic Content -->
                 </div>
@@ -405,14 +401,15 @@
 
     <script>
         // Your web app's Firebase configuration
+        // Replace the below config with your own Firebase project config
         const firebaseConfig = {
-            apiKey: "AIzaSyD0NbIc9gSS7jVcg55UJ1HS7wDWwo3tImI",
-            authDomain: "varahi-park.firebaseapp.com",
-            projectId: "varahi-park",
-            storageBucket: "varahi-park.appspot.com",
-            messagingSenderId: "52981148614",
-            appId: "1:52981148614:web:b87f4e753f2328bbc220c7",
-            measurementId: "G-901R4MHN4P"
+          apiKey: "AIzaSyD0NbIc9gSS7jVcg55UJ1HS7wDWwo3tImI",
+          authDomain: "varahi-park.firebaseapp.com",
+          projectId: "varahi-park",
+          storageBucket: "varahi-park.appspot.com",
+          messagingSenderId: "52981148614",
+          appId: "1:52981148614:web:b87f4e753f2328bbc220c7",
+          measurementId: "G-901R4MHN4P"
         };
 
         // Initialize Firebase
@@ -424,171 +421,224 @@
         const loginPage = document.getElementById('login-page');
         const loginForm = document.getElementById('login-form');
         const loginError = document.getElementById('login-error');
+
         const appDiv = document.getElementById('app');
+        const logoutBtn = document.getElementById('logout-btn');
+
+        const addMemberBtn = document.getElementById('add-member-btn');
+        const membersList = document.getElementById('members-list');
+
+        const addAnnouncementBtn = document.getElementById('add-announcement-btn');
+        const announcementsList = document.getElementById('announcements-list');
+
+        const addMaintenanceBtn = document.getElementById('add-maintenance-btn');
+        const maintenanceList = document.getElementById('maintenance-list');
+
+        const addEventBtn = document.getElementById('add-event-btn');
+        const eventsList = document.getElementById('events-list');
+
+        const profileName = document.getElementById('profile-name');
+        const profileEmail = document.getElementById('profile-email');
+        const profileFlat = document.getElementById('profile-flat');
+        const editProfileBtn = document.getElementById('edit-profile-btn');
 
         const modal = document.getElementById('modal');
         const modalBody = document.getElementById('modal-body');
+        const closeButton = document.querySelector('.close-button');
+
+        const totalMembers = document.getElementById('total-members');
+        const totalAnnouncements = document.getElementById('total-announcements');
+        const totalMaintenance = document.getElementById('total-maintenance');
+        const totalEvents = document.getElementById('total-events');
 
         let currentUser = null;
-        let currentRole = '';
+        let currentUserRole = 'user';
 
-        // Navigation Function
-        function navigate(section) {
-            const sections = document.querySelectorAll('.section');
-            sections.forEach(sec => {
-                if (sec.id === section) {
-                    sec.style.display = 'block';
-                } else {
-                    sec.style.display = 'none';
-                }
-            });
-        }
-
-        // Show Modal
-        function openModal(content) {
-            modalBody.innerHTML = content;
-            modal.style.display = 'flex';
-        }
-
-        // Close Modal
-        function closeModal() {
-            modal.style.display = 'none';
-            modalBody.innerHTML = '';
-        }
-
-        // Logout Function
-        function logout() {
-            auth.signOut().then(() => {
-                appDiv.style.display = 'none';
-                loginPage.style.display = 'flex';
-            }).catch(error => {
-                alert('Error logging out: ' + error.message);
-            });
-        }
-
-        // Handle Authentication State
+        // Authentication State Listener
         auth.onAuthStateChanged(user => {
             if (user) {
                 currentUser = user;
-                // Fetch user role from Firestore
-                db.collection('users').doc(user.uid).get().then(doc => {
-                    if (doc.exists) {
-                        currentRole = doc.data().role;
-                        initializeApp();
-                    } else {
-                        // If user document doesn't exist, assign 'user' role
-                        db.collection('users').doc(user.uid).set({ role: 'user' }).then(() => {
-                            currentRole = 'user';
-                            initializeApp();
-                        });
-                    }
-                });
+                fetchUserRole(user.uid);
             } else {
                 appDiv.style.display = 'none';
                 loginPage.style.display = 'flex';
             }
         });
+
+        // Fetch User Role from Firestore
+        function fetchUserRole(uid) {
+            db.collection('users').doc(uid).get().then(doc => {
+                if (doc.exists) {
+                    currentUserRole = doc.data().role;
+                    initializeApp();
+                } else {
+                    console.error('No such user document!');
+                    auth.signOut();
+                }
+            }).catch(error => {
+                console.error('Error fetching user role:', error);
+                auth.signOut();
+            });
+        }
 
         // Initialize App after Authentication
         function initializeApp() {
             loginPage.style.display = 'none';
             appDiv.style.display = 'block';
-            navigate('dashboard');
-            populateDashboard();
-            if (currentRole === 'admin') {
-                // Show admin buttons
-                document.getElementById('add-member-btn').style.display = 'inline-block';
-                document.getElementById('add-announcement-btn').style.display = 'inline-block';
-                document.getElementById('add-maintenance-btn').style.display = 'inline-block';
-                document.getElementById('add-event-btn').style.display = 'inline-block';
-                document.getElementById('edit-profile-btn').style.display = 'inline-block';
-                // Load admin functionalities
-                loadMembers();
-                loadAnnouncements();
-                loadMaintenance();
-                loadEvents();
-            } else {
-                // Hide admin buttons
-                document.getElementById('add-member-btn').style.display = 'none';
-                document.getElementById('add-announcement-btn').style.display = 'none';
-                document.getElementById('add-maintenance-btn').style.display = 'none';
-                document.getElementById('add-event-btn').style.display = 'none';
-                document.getElementById('edit-profile-btn').style.display = 'none';
-                // Load user view (read-only)
-                loadMembers();
-                loadAnnouncements();
-                loadMaintenance();
-                loadEvents();
-            }
-            loadProfile();
+            populateProfile();
+            initializeDashboard();
+            renderMembers();
+            renderAnnouncements();
+            renderMaintenance();
+            renderEvents();
+            setupAdminControls();
         }
 
-        // Login Form Submission
-        loginForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
+        // Populate Profile Information
+        function populateProfile() {
+            profileName.textContent = currentUser.displayName || 'N/A';
+            profileEmail.textContent = currentUser.email;
+            // Assuming 'flat' is stored in user document
+            db.collection('users').doc(currentUser.uid).get().then(doc => {
+                if (doc.exists) {
+                    profileFlat.textContent = doc.data().flat || 'N/A';
+                }
+            });
+        }
 
-            auth.signInWithEmailAndPassword(email, password)
-                .then(() => {
-                    loginError.textContent = '';
-                })
-                .catch(error => {
-                    loginError.textContent = error.message;
-                });
-        });
+        // Setup Admin Controls
+        function setupAdminControls() {
+            if (currentUserRole !== 'admin') {
+                // Hide admin buttons and actions
+                addMemberBtn.style.display = 'none';
+                addAnnouncementBtn.style.display = 'none';
+                addMaintenanceBtn.style.display = 'none';
+                addEventBtn.style.display = 'none';
 
-        // Populate Dashboard Counts
-        function populateDashboard() {
+                // Hide Actions column in tables
+                const actionHeaders = document.querySelectorAll('th:last-child');
+                actionHeaders.forEach(th => th.style.display = 'none');
+
+                const actionCells = document.querySelectorAll('td:last-child');
+                actionCells.forEach(td => td.style.display = 'none');
+            }
+        }
+
+        // Initialize Dashboard Counts
+        function initializeDashboard() {
             // Total Members
             db.collection('members').get().then(snapshot => {
-                document.getElementById('total-members').textContent = snapshot.size;
+                totalMembers.textContent = snapshot.size;
             });
 
             // Total Announcements
             db.collection('announcements').get().then(snapshot => {
-                document.getElementById('total-announcements').textContent = snapshot.size;
+                totalAnnouncements.textContent = snapshot.size;
             });
 
             // Total Maintenance Requests
             db.collection('maintenance').get().then(snapshot => {
-                document.getElementById('total-maintenance').textContent = snapshot.size;
+                totalMaintenance.textContent = snapshot.size;
             });
 
             // Total Events
             db.collection('events').get().then(snapshot => {
-                document.getElementById('total-events').textContent = snapshot.size;
+                totalEvents.textContent = snapshot.size;
             });
         }
 
-        // Load Members
-        function loadMembers() {
-            const membersList = document.getElementById('members-list');
-            membersList.innerHTML = '';
-            db.collection('members').orderBy('name').onSnapshot(snapshot => {
+        // Render Members
+        function renderMembers() {
+            db.collection('members').onSnapshot(snapshot => {
                 membersList.innerHTML = '';
                 snapshot.forEach(doc => {
                     const member = doc.data();
                     const tr = document.createElement('tr');
+
                     tr.innerHTML = `
                         <td>${member.name}</td>
                         <td>${member.flat}</td>
                         <td>${member.contact}</td>
-                        <td>
-                            ${currentRole === 'admin' ? `
-                                <button class="btn" onclick="editMember('${doc.id}')">Edit</button>
-                                <button class="btn btn-danger" onclick="deleteMember('${doc.id}')">Delete</button>
-                            ` : 'N/A'}
-                        </td>
+                        ${currentUserRole === 'admin' ? `<td>
+                            <button class="btn btn-secondary" onclick="editMember('${doc.id}')">Edit</button>
+                            <button class="btn btn-danger" onclick="deleteMember('${doc.id}')">Delete</button>
+                        </td>` : ''}
                     `;
+
                     membersList.appendChild(tr);
                 });
             });
         }
 
+        // Render Announcements
+        function renderAnnouncements() {
+            db.collection('announcements').onSnapshot(snapshot => {
+                announcementsList.innerHTML = '';
+                snapshot.forEach(doc => {
+                    const announcement = doc.data();
+                    const tr = document.createElement('tr');
+
+                    tr.innerHTML = `
+                        <td>${announcement.title}</td>
+                        <td>${announcement.date}</td>
+                        ${currentUserRole === 'admin' ? `<td>
+                            <button class="btn btn-secondary" onclick="editAnnouncement('${doc.id}')">Edit</button>
+                            <button class="btn btn-danger" onclick="deleteAnnouncement('${doc.id}')">Delete</button>
+                        </td>` : ''}
+                    `;
+
+                    announcementsList.appendChild(tr);
+                });
+            });
+        }
+
+        // Render Maintenance Requests
+        function renderMaintenance() {
+            db.collection('maintenance').onSnapshot(snapshot => {
+                maintenanceList.innerHTML = '';
+                snapshot.forEach(doc => {
+                    const request = doc.data();
+                    const tr = document.createElement('tr');
+
+                    tr.innerHTML = `
+                        <td>${request.issue}</td>
+                        <td>${request.flat}</td>
+                        <td>${request.status}</td>
+                        ${currentUserRole === 'admin' ? `<td>
+                            <button class="btn btn-secondary" onclick="updateMaintenanceStatus('${doc.id}')">Update</button>
+                            <button class="btn btn-danger" onclick="deleteMaintenance('${doc.id}')">Delete</button>
+                        </td>` : ''}
+                    `;
+
+                    maintenanceList.appendChild(tr);
+                });
+            });
+        }
+
+        // Render Events
+        function renderEvents() {
+            db.collection('events').onSnapshot(snapshot => {
+                eventsList.innerHTML = '';
+                snapshot.forEach(doc => {
+                    const event = doc.data();
+                    const tr = document.createElement('tr');
+
+                    tr.innerHTML = `
+                        <td>${event.name}</td>
+                        <td>${event.date}</td>
+                        ${currentUserRole === 'admin' ? `<td>
+                            <button class="btn btn-secondary" onclick="editEvent('${doc.id}')">Edit</button>
+                            <button class="btn btn-danger" onclick="deleteEvent('${doc.id}')">Delete</button>
+                        </td>` : ''}
+                    `;
+
+                    eventsList.appendChild(tr);
+                });
+            });
+        }
+
         // Add Member
-        document.getElementById('add-member-btn').addEventListener('click', () => {
-            if (currentRole !== 'admin') return;
+        addMemberBtn.addEventListener('click', () => {
             openModal(`
                 <h2>Add Member</h2>
                 <form id="member-form">
@@ -607,19 +657,20 @@
                 const name = document.getElementById('member-name').value;
                 const flat = document.getElementById('member-flat').value;
                 const contact = document.getElementById('member-contact').value;
+
                 db.collection('members').add({ name, flat, contact })
                     .then(() => {
                         closeModal();
+                        initializeDashboard();
                     })
                     .catch(error => {
-                        alert('Error adding member: ' + error.message);
+                        console.error('Error adding member:', error);
                     });
             });
         });
 
         // Edit Member
         function editMember(id) {
-            if (currentRole !== 'admin') return;
             db.collection('members').doc(id).get().then(doc => {
                 if (doc.exists) {
                     const member = doc.data();
@@ -641,60 +692,35 @@
                         const name = document.getElementById('edit-member-name').value;
                         const flat = document.getElementById('edit-member-flat').value;
                         const contact = document.getElementById('edit-member-contact').value;
+
                         db.collection('members').doc(id).update({ name, flat, contact })
                             .then(() => {
                                 closeModal();
+                                initializeDashboard();
                             })
                             .catch(error => {
-                                alert('Error updating member: ' + error.message);
+                                console.error('Error updating member:', error);
                             });
                     });
-                } else {
-                    alert('Member not found');
                 }
-            }).catch(error => {
-                alert('Error fetching member: ' + error.message);
             });
         }
 
         // Delete Member
         function deleteMember(id) {
-            if (currentRole !== 'admin') return;
             if (confirm('Are you sure you want to delete this member?')) {
                 db.collection('members').doc(id).delete()
+                    .then(() => {
+                        initializeDashboard();
+                    })
                     .catch(error => {
-                        alert('Error deleting member: ' + error.message);
+                        console.error('Error deleting member:', error);
                     });
             }
         }
 
-        // Load Announcements
-        function loadAnnouncements() {
-            const announcementsList = document.getElementById('announcements-list');
-            announcementsList.innerHTML = '';
-            db.collection('announcements').orderBy('date', 'desc').onSnapshot(snapshot => {
-                announcementsList.innerHTML = '';
-                snapshot.forEach(doc => {
-                    const announcement = doc.data();
-                    const tr = document.createElement('tr');
-                    tr.innerHTML = `
-                        <td>${announcement.title}</td>
-                        <td>${announcement.date}</td>
-                        <td>
-                            ${currentRole === 'admin' ? `
-                                <button class="btn" onclick="editAnnouncement('${doc.id}')">Edit</button>
-                                <button class="btn btn-danger" onclick="deleteAnnouncement('${doc.id}')">Delete</button>
-                            ` : 'N/A'}
-                        </td>
-                    `;
-                    announcementsList.appendChild(tr);
-                });
-            });
-        }
-
         // Add Announcement
-        document.getElementById('add-announcement-btn').addEventListener('click', () => {
-            if (currentRole !== 'admin') return;
+        addAnnouncementBtn.addEventListener('click', () => {
             openModal(`
                 <h2>Add Announcement</h2>
                 <form id="announcement-form">
@@ -710,19 +736,20 @@
                 e.preventDefault();
                 const title = document.getElementById('announcement-title').value;
                 const date = document.getElementById('announcement-date').value;
+
                 db.collection('announcements').add({ title, date })
                     .then(() => {
                         closeModal();
+                        initializeDashboard();
                     })
                     .catch(error => {
-                        alert('Error adding announcement: ' + error.message);
+                        console.error('Error adding announcement:', error);
                     });
             });
         });
 
         // Edit Announcement
         function editAnnouncement(id) {
-            if (currentRole !== 'admin') return;
             db.collection('announcements').doc(id).get().then(doc => {
                 if (doc.exists) {
                     const announcement = doc.data();
@@ -741,61 +768,35 @@
                         e.preventDefault();
                         const title = document.getElementById('edit-announcement-title').value;
                         const date = document.getElementById('edit-announcement-date').value;
+
                         db.collection('announcements').doc(id).update({ title, date })
                             .then(() => {
                                 closeModal();
+                                initializeDashboard();
                             })
                             .catch(error => {
-                                alert('Error updating announcement: ' + error.message);
+                                console.error('Error updating announcement:', error);
                             });
                     });
-                } else {
-                    alert('Announcement not found');
                 }
-            }).catch(error => {
-                alert('Error fetching announcement: ' + error.message);
             });
         }
 
         // Delete Announcement
         function deleteAnnouncement(id) {
-            if (currentRole !== 'admin') return;
             if (confirm('Are you sure you want to delete this announcement?')) {
                 db.collection('announcements').doc(id).delete()
+                    .then(() => {
+                        initializeDashboard();
+                    })
                     .catch(error => {
-                        alert('Error deleting announcement: ' + error.message);
+                        console.error('Error deleting announcement:', error);
                     });
             }
         }
 
-        // Load Maintenance Requests
-        function loadMaintenance() {
-            const maintenanceList = document.getElementById('maintenance-list');
-            maintenanceList.innerHTML = '';
-            db.collection('maintenance').orderBy('date', 'desc').onSnapshot(snapshot => {
-                maintenanceList.innerHTML = '';
-                snapshot.forEach(doc => {
-                    const request = doc.data();
-                    const tr = document.createElement('tr');
-                    tr.innerHTML = `
-                        <td>${request.issue}</td>
-                        <td>${request.flat}</td>
-                        <td>${request.status}</td>
-                        <td>
-                            ${currentRole === 'admin' ? `
-                                <button class="btn" onclick="updateMaintenanceStatus('${doc.id}')">Update</button>
-                                <button class="btn btn-danger" onclick="deleteMaintenance('${doc.id}')">Delete</button>
-                            ` : 'N/A'}
-                        </td>
-                    `;
-                    maintenanceList.appendChild(tr);
-                });
-            });
-        }
-
         // Add Maintenance Request
-        document.getElementById('add-maintenance-btn').addEventListener('click', () => {
-            if (currentRole !== 'admin') return;
+        addMaintenanceBtn.addEventListener('click', () => {
             openModal(`
                 <h2>New Maintenance Request</h2>
                 <form id="maintenance-form">
@@ -803,44 +804,226 @@
                     <input type="text" id="maintenance-issue" required>
                     <label>Flat No.:</label>
                     <input type="text" id="maintenance-flat" required>
-                    <label>Status:</label>
-                    <select id="maintenance-status" required>
-                        <option value="Pending">Pending</option>
-                        <option value="In Progress">In Progress</option>
-                        <option value="Completed">Completed</option>
-                    </select>
                     <button type="submit" class="btn">Submit</button>
                 </form>
             `);
 
             document.getElementById('maintenance-form').addEventListener('submit', function(e) {
                 e.preventDefault();
-         
                 const issue = document.getElementById('maintenance-issue').value;
                 const flat = document.getElementById('maintenance-flat').value;
-                const status = document.getElementById('maintenance-status').value;
-         
-                db.collection('maintenance').add({ 
-                    issue, 
-                    flat, 
-                    status 
-                })
-                .then(() => {
-                    // Close the modal after successful submission
+
+                db.collection('maintenance').add({ issue, flat, status: "Pending" })
+                    .then(() => {
+                        closeModal();
+                        initializeDashboard();
+                    })
+                    .catch(error => {
+                        console.error('Error adding maintenance request:', error);
+                    });
+            });
+        });
+
+        // Update Maintenance Status
+        function updateMaintenanceStatus(id) {
+            db.collection('maintenance').doc(id).get().then(doc => {
+                if (doc.exists) {
+                    const currentStatus = doc.data().status;
+                    let newStatus = '';
+                    if (currentStatus === 'Pending') {
+                        newStatus = 'In Progress';
+                    } else if (currentStatus === 'In Progress') {
+                        newStatus = 'Completed';
+                    } else {
+                        newStatus = 'Pending';
+                    }
+
+                    db.collection('maintenance').doc(id).update({ status: newStatus })
+                        .then(() => {
+                            initializeDashboard();
+                        })
+                        .catch(error => {
+                            console.error('Error updating maintenance status:', error);
+                        });
+                }
+            });
+        }
+
+        // Delete Maintenance Request
+        function deleteMaintenance(id) {
+            if (confirm('Are you sure you want to delete this maintenance request?')) {
+                db.collection('maintenance').doc(id).delete()
+                    .then(() => {
+                        initializeDashboard();
+                    })
+                    .catch(error => {
+                        console.error('Error deleting maintenance request:', error);
+                    });
+            }
+        }
+
+        // Add Event
+        addEventBtn.addEventListener('click', () => {
+            openModal(`
+                <h2>Add Event</h2>
+                <form id="event-form">
+                    <label>Name:</label>
+                    <input type="text" id="event-name" required>
+                    <label>Date:</label>
+                    <input type="date" id="event-date" required>
+                    <button type="submit" class="btn">Add</button>
+                </form>
+            `);
+
+            document.getElementById('event-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const name = document.getElementById('event-name').value;
+                const date = document.getElementById('event-date').value;
+
+                db.collection('events').add({ name, date })
+                    .then(() => {
+                        closeModal();
+                        initializeDashboard();
+                    })
+                    .catch(error => {
+                        console.error('Error adding event:', error);
+                    });
+            });
+        });
+
+        // Edit Event
+        function editEvent(id) {
+            db.collection('events').doc(id).get().then(doc => {
+                if (doc.exists) {
+                    const event = doc.data();
+                    openModal(`
+                        <h2>Edit Event</h2>
+                        <form id="edit-event-form">
+                            <label>Name:</label>
+                            <input type="text" id="edit-event-name" value="${event.name}" required>
+                            <label>Date:</label>
+                            <input type="date" id="edit-event-date" value="${event.date}" required>
+                            <button type="submit" class="btn">Save</button>
+                        </form>
+                    `);
+
+                    document.getElementById('edit-event-form').addEventListener('submit', function(e) {
+                        e.preventDefault();
+                        const name = document.getElementById('edit-event-name').value;
+                        const date = document.getElementById('edit-event-date').value;
+
+                        db.collection('events').doc(id).update({ name, date })
+                            .then(() => {
+                                closeModal();
+                                initializeDashboard();
+                            })
+                            .catch(error => {
+                                console.error('Error updating event:', error);
+                            });
+                    });
+                }
+            });
+        }
+
+        // Delete Event
+        function deleteEvent(id) {
+            if (confirm('Are you sure you want to delete this event?')) {
+                db.collection('events').doc(id).delete()
+                    .then(() => {
+                        initializeDashboard();
+                    })
+                    .catch(error => {
+                        console.error('Error deleting event:', error);
+                    });
+            }
+        }
+
+        // Edit Profile
+        editProfileBtn.addEventListener('click', () => {
+            openModal(`
+                <h2>Edit Profile</h2>
+                <form id="profile-form">
+                    <label>Name:</label>
+                    <input type="text" id="profile-name-input" value="${profileName.textContent}" required>
+                    <label>Email:</label>
+                    <input type="email" id="profile-email-input" value="${profileEmail.textContent}" required>
+                    <label>Flat No.:</label>
+                    <input type="text" id="profile-flat-input" value="${profileFlat.textContent}" required>
+                    <button type="submit" class="btn">Save</button>
+                </form>
+            `);
+
+            document.getElementById('profile-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const name = document.getElementById('profile-name-input').value;
+                const email = document.getElementById('profile-email-input').value;
+                const flat = document.getElementById('profile-flat-input').value;
+
+                // Update Firebase Auth profile
+                currentUser.updateProfile({
+                    displayName: name
+                }).then(() => {
+                    // Update email if changed
+                    if (email !== currentUser.email) {
+                        return currentUser.updateEmail(email);
+                    }
+                }).then(() => {
+                    // Update Firestore user document
+                    return db.collection('users').doc(currentUser.uid).update({ flat });
+                }).then(() => {
                     closeModal();
-         
-                    // Optionally, clear the form fields
-                    document.getElementById('maintenance-issue').value = '';
-                    document.getElementById('maintenance-flat').value = '';
-                    document.getElementById('maintenance-status').value = '';
-         
-                    // Show success message
-                    alert('Maintenance request submitted successfully!');
-                })
-                .catch(error => {
-                    // Handle any errors that occur during the submission
-                    console.error('Error submitting maintenance request: ', error);
-                    alert('An error occurred while submitting the maintenance request. Please try again.');
+                    populateProfile();
+                    alert('Profile updated successfully!');
+                }).catch(error => {
+                    console.error('Error updating profile:', error);
+                    alert('Error updating profile. Please try again.');
                 });
             });
-         
+        });
+
+        // Logout
+        logoutBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            auth.signOut();
+        });
+
+        // Login Form Submission
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+
+            auth.signInWithEmailAndPassword(email, password)
+                .then(() => {
+                    loginError.textContent = '';
+                })
+                .catch(error => {
+                    console.error('Login Error:', error);
+                    loginError.textContent = error.message;
+                });
+        });
+
+        // Modal Functions
+        function openModal(content) {
+            modalBody.innerHTML = content;
+            modal.style.display = 'flex';
+        }
+
+        function closeModal() {
+            modal.style.display = 'none';
+        }
+
+        // Close modal when clicking on close button or outside the modal
+        closeButton.onclick = closeModal;
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+
+        // Firebase Auth Signup (Optional)
+        // You can add a signup form similarly to the login form if needed
+
+    </script>
+</body>
+</html>
